@@ -1,5 +1,4 @@
 <script setup lang="ts">
-  console.log('AppHeader.vue - setup script');
   const supabase = useSupabaseAuthClient();
   const user = useSupabaseUser();
 
