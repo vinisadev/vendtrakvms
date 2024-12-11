@@ -1,41 +1,28 @@
-# Nuxt Minimal Starter
+# Nuxt 3 Minimal Starter
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
 
 ## Setup
 
-Make sure to install dependencies:
+Make sure to install the dependencies:
 
 ```bash
+# yarn
+yarn install
+
 # npm
 npm install
 
 # pnpm
-pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
+pnpm install --shamefully-hoist
 ```
 
 ## Development Server
 
-Start the development server on `http://localhost:3000`:
+Start the development server on http://localhost:3000
 
 ```bash
-# npm
 npm run dev
-
-# pnpm
-pnpm dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
 ```
 
 ## Production
@@ -43,33 +30,42 @@ bun run dev
 Build the application for production:
 
 ```bash
-# npm
 npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
 ```
 
 Locally preview production build:
 
 ```bash
-# npm
 npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
 ```
 
 Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+
+# GENESIS STEPS
+This is what I did to create the SaaS, it is here for your interest and for my memory, you don't need to repeat these.
+
+Follow instructions from here https://nuxt.com/docs/getting-started/installation
+
+```bash
+# install node
+n lts
+npx nuxi init vendtrakvms
+code vendtrakvms/
+npm install
+npm run dev -- -o
+```
+
+To setup Supabase and middleware, loosely follow instructions from https://www.youtube.com/watch?v=IcaL1RfnU44
+
+Supabase - new account (free tier), used github oauth for supabase account
+
+```
+npm install @nuxtjs/supabase
+```
+
+add this to nuxt.config.ts
+```
+modules: ['@nuxtjs/supabase']
+```
+
+Follow these instructions to add google oauth https://supabase.com/docs/guides/auth/social-login/auth-google
