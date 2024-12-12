@@ -1,4 +1,4 @@
-# Nuxt 3 Minimal Starter + Supabase + OAuth
+# Nuxt 3 Minimal Starter + Supabase + OAuth + Prisma + TRPC
 
 Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
 
@@ -92,3 +92,12 @@ npx prisma db push
 npm install @prisma/client --save-dev
 npx prisma generate
 ```
+
+# TODO
+- add role to membership and have methods for changing role, making sure one owner etc (done)
+- remove @unique so users can have multiple accounts (done)
+- add concept of 'current' account for user... maybe put account on context or session... maybe just on DB... 'current' boolean on membership?
+- add max_notes property to plan and account as an example of a 'limit' property (done)
+- add spinup script somehow to create plans???... should I use some sort of generator like sidebase?
+- team invitation thingy
+- integration with stripe including webhooks
