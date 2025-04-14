@@ -1,16 +1,18 @@
-import { betterAuth } from "better-auth"
-import { drizzleAdapter } from "better-auth/adapters/drizzle"
-import { db } from "@/db"
-import { sendEmail } from "@/actions/email"
-import { openAPI } from "better-auth/plugins"
+import { betterAuth } from 'better-auth'
+import { drizzleAdapter } from 'better-auth/adapters/drizzle'
+import { db } from '@/db'
+import { sendEmail } from '@/actions/email'
+import { openAPI } from 'better-auth/plugins'
+import { schema } from '@/db/schema'
 
 export const auth = betterAuth({
   database: drizzleAdapter(db, {
-    provider: "pg"
+    provider: 'pg',
+    schema: schema
   }),
   emailAndPassword: {
     enabled: true,
-    requireEmailVerification: true,
+    requireEmailVerification: true
   },
   emailVerification: {
     sendOnSignUp: true,
@@ -19,7 +21,7 @@ export const auth = betterAuth({
       const verificationUrl = `${process.env.BETTER_AUTH_URL}/api/auth/verify-email?token=${token}&callbackURL=${process.env.EMAIL_VERIFICATION_CALLBACK_URL}`
       await sendEmail({
         to: user.email,
-        subject: "VendTrakVMS Email Verification",
+        subject: 'VendTrakVMS Email Verification',
         text: `Click the link to very your email: ${verificationUrl}`
       })
     }
