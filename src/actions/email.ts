@@ -1,47 +1,36 @@
-"use server"
-import sgMail from "@sendgrid/mail"
+'use server'
+import Mailgun from 'mailgun.js'
+import formData from 'form-data'
 
 export async function sendEmail({
   to,
   subject,
-  text,
+  text
 }: {
-  to: string;
-  subject: string;
-  text: string;
+  to: string
+  subject: string
+  text: string
 }) {
   if (!process.env.SENDGRID_API_KEY) {
-    throw new Error("SENDGRID_API_KEY environment variable is not set")
+    throw new Error('SENDGRID_API_KEY environment variable is not set')
   }
   if (!process.env.EMAIL_FROM) {
-    throw new Error("EMAIL_FROM environment variable is not set")
+    throw new Error('EMAIL_FROM environment variable is not set')
   }
 
-  sgMail.setApiKey(process.env.SENDGRID_API_KEY)
+  const mgMail = new Mailgun(formData)
+  const mg = mgMail.client({
+    username: 'api',
+    key: process.env.MAILGUN_API_KEY || 'key-yourkeyhere'
+  })
 
-  const message = {
-    to: to.toLowerCase().trim(),
-    from: process.env.EMAIL_FROM,
-    subject: subject.trim(),
-    text: text.trim(),
-  }
-
-  try {
-    const [response] = await sgMail.send(message)
-
-    if (response.statusCode !== 202) {
-      throw new Error(`SendGrid API returned status code ${response.statusCode}`)
-    }
-
-    return {
-      success: true,
-      messageId: response.headers['x-message-id'],
-    }
-  } catch (error) {
-    console.error("Error sending email:", error)
-    return {
-      success: false,
-      message: "Failed to send email. Please try again later."
-    }
-  }
+  mg.messages
+    .create('mail.domain76.com', {
+      from: process.env.EMAIL_FROM,
+      to: to.toLowerCase().trim(),
+      subject: subject.trim(),
+      text: text.trim()
+    })
+    .then((msg) => console.log(msg))
+    .catch((err) => console.error(err))
 }
